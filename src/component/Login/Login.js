@@ -53,15 +53,6 @@ function Login() {
       history.replace(from);
     })
   }
-
-  const signOut = () => {
-    handleSignOut()
-    .then(res => {
-      setUser(res);
-      setLoggedInUser(res);
-    })
-  }
-
   const fbLogin = () => {
     handleFbLogin()
     .then(res => {
@@ -70,6 +61,15 @@ function Login() {
       history.replace(from);
     })
   }
+  const signOut = () => {
+    handleSignOut()
+    .then(res => {
+      setUser(res);
+      setLoggedInUser(res);
+    })
+  }
+
+  
   const handleBlur = (e) => {
     let isFieldValid = true;
     if(e.target.name === 'email'){
@@ -96,7 +96,12 @@ function Login() {
         :<button onClick={googleSignIn}>Sign in with Google</button>
       }
       <br/>
-      <button onClick={fbLogin}>Sign in with Facebook</button>
+      {
+        user.isSignedIn
+        ?<button onClick={signOut}>Sign out</button>
+        :<button onClick={fbLogin}>Sign in with Facebook</button>
+      }
+      
       {
         user.isSignedIn && <div>
           <h2>Welcome, {user.name}</h2>
